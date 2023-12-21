@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 export default function Header() {
     return (
-        <Navbar className='shadow-sm p-3 mb-5'>
+        <Navbar className='shadow-sm bg-light' fixed='top'>
         <Container>
           <Navbar.Brand href="#home">
             <img
@@ -14,6 +14,7 @@ export default function Header() {
               alt="React Bootstrap logo"
             />
           </Navbar.Brand>
+          {/* Show if its button or profile picture */}
           <Button className='px-5' href='#test'>Login</Button>
         </Container>
       </Navbar>

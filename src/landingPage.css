@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Inika");
+
+* {
+    font-family: 'Inika';
+    font-style: normal;
+}
+
+.imageWrapper{
+    background-color: black;
+    color: white;
+    position: relative;
+}
+
+.heroImage {
+    opacity: 0.75;
+    height: 50%;
+    object-position: 50% 50%; 
+}
+
+
+.overlayText h3 {
+    font-weight: bold;
+    width: 100%;
+    font-size: 50px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mockup {
+    border-radius: 15px;
+}
