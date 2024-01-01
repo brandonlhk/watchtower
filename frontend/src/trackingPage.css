@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Inika");
+
+* {
+    font-family: 'Inika';
+    font-style: normal;
+}
+
+.term {
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    height: 40px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .term:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
