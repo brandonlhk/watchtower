@@ -7,19 +7,29 @@ const data = [
                 company: "Shopee",
                 role: "Software Engineer Internship",
                 date: "16 December 2023",
-                status: "Application submitted"
+                status: "Application submitted",
+                logo: "https://logo.clearbit.com/shopee.com?format=jpg"
             },
             {
                 company: "Govtech",
                 role: "Software Engineer Internship",
                 date: "17 December 2023",
-                status: "Application submitted"
+                status: "Application submitted",
+                logo: "https://logo.clearbit.com/tech.gov.sg"
+            },
+            {
+                company: "Govtech",
+                role: "Data Engineer Internship",
+                date: "17 December 2023",
+                status: "Interview",
+                logo: "https://logo.clearbit.com/tech.gov.sg"
             },
             {
                 company: "Grab",
                 role: "Software Engineer Internship",
                 date: "18 December 2023",
-                status: "Application submitted"
+                status: "Offer Accepted",
+                logo: "https://logo.clearbit.com/grab.com"
             },
         ]
     }, 
@@ -31,19 +41,22 @@ const data = [
                 company: "SMU",
                 role: "Research Assistant",
                 date: "16 December 2022",
-                status: "Rejected"
+                status: "Rejected",
+                logo: "https://logo.clearbit.com/smu.edu.sg"
             },
             {
                 company: "Govtech",
                 role: "Software Engineer Internship",
                 date: "17 December 2022",
-                status: "Rejected"
+                status: "Rejected",
+                logo: "https://logo.clearbit.com/tech.gov.sg"
             },
             {
                 company: "MINDEF",
                 role: "Software Engineer Internship",
                 date: "18 December 2022",
-                status: "Rejeceted"
+                status: "Rejected",
+                logo: "https://logo.clearbit.com/mindef.gov.sg"
             },
         ]
     }, 
