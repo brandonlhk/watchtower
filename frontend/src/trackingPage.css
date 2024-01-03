@@ -26,3 +26,8 @@
   .term:hover {
     background-color: rgba(0, 0, 0, 0.5);
   }
+
+  .bin:hover {
+    background-color: white;
+    opacity: .5;
+  }

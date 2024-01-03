@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import Navbar from "../components/NavbarTracking"
 import ApplicationFormModal from '../components/ApplicationFormModal';
+import UpdateApplicationModal from "../components/UpdateApplicationModal"
 import {Container, Row, Col, Button, Badge} from "react-bootstrap"
 import testData from "../data"
 import "../trackingPage.css"
 import moment from 'moment';
+import Bin from "../images/bin.png"
+
 
 export default function Tracking() {
 
@@ -12,10 +15,12 @@ export default function Tracking() {
   const [selectedTerm, setSelectedTerm] = useState(null)
   const [terms, setTerms] = useState(testData)
   const [showModal, setShowModal] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const handleStatus = (status) => {
     var badgeBg = "primary"
-    if (status === "Rejected") {
+    if (status === "Rejected" || status === "Offer Rejected") {
       badgeBg = "danger"
     }
     else if (status === "Interview") {
@@ -40,7 +45,7 @@ export default function Tracking() {
     setSelectedTerm(`Term ${newIndex}`);
   };
 
-
+  // add applications
   const handleAddApplication = (newApplication) => {
     // Find the current term in the terms array
     const updatedTerms = terms.map((term) => {
@@ -58,20 +63,59 @@ export default function Tracking() {
     setTerms(updatedTerms);
   };
 
+  // update applications
+  const handleUpdateApplication = (updatedApplication) => {
+    // Update the application with the given ID
+    const updatedTerms = terms.map((term) => ({
+      ...term,
+      applications: term.applications.map((app) =>
+        app.id === updatedApplication.id ? updatedApplication : app
+      ),
+    }));
+  
+    setTerms(updatedTerms);
+  
+    // If applications are stored in a database, send an update request to the server
+    // axios.put(`/api/applications/${updatedApplication.id}`, updatedApplication).then(() => console.log('Application updated'));
+  
+    // Close the update modal
+    handleCloseUpdateModal();
+  };
+
+  const handleDeleteApplication = (applicationId) => {
+    const updatedTerms = terms.map((term) => ({
+      ...term, 
+      applications: term.applications.filter((app) => app.id !== applicationId)
+    }))
+
+    setTerms(updatedTerms)
+      // If applications are stored in a database, send a delete request to the server
+      // axios.delete(`/api/applications/${applicationId}`).then(() => console.log('Deleted'));
+
+  }
+
+  // add application modal
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
+
+  // update modal
+  const handleShowUpdateModal = () => setShowUpdateModal(true);
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    // Clear the selected application when the modal is closed
+    setSelectedApplication(null);
+  };
+
   const calculateTimeDifference = (applicationDate) => {
     const now = moment();
-    const appliedDate = moment(applicationDate);
+    const appliedDate = moment(applicationDate, "YYYY-MM-DD");
     const daysAgo = now.diff(appliedDate, 'days');
-
-    if (daysAgo === 0) {
-      return `Applied today`
-    }
-
-    return `Applied ${daysAgo} days ago`;
+    
+    return daysAgo === 0 ? "Applied today" : `Applied ${daysAgo} days ago`;
   };
+  
 
   return (
     <div>
@@ -111,12 +155,12 @@ export default function Tracking() {
                   <Row className='pt-3'>
                     <hr></hr>
                     {/* Image */}
-                    <Col className="text-center">
-                      <img width="50px" src={application.logo} alt="" />
+                    <Col xs={2} className="border" style={{maxWidth: "128px"}}>
+                      <img src={application.logo} alt="" style={{ width: '100%', objectFit: 'contain' }}/>
                     </Col>
 
                     {/* Application Details */}
-                    <Col xs={8} className='m-auto'>
+                    <Col xs={8} className='border'>
                       <h5>{application.role} </h5> 
                       <small className="text-body-secondary">
                       {application.company}</small>
@@ -126,8 +170,16 @@ export default function Tracking() {
                     </Col>
 
                     {/* Update status button */}
-                    <Col>
-                      <Button variant="primary">Update Status</Button>
+                    <Col xs={2} className='border'>
+                      <Button variant="outline-primary" 
+                      onClick={() => {
+                        setSelectedApplication(application)
+                        handleShowUpdateModal()}}>Update Application</Button>
+
+                      <Button variant="link" 
+                      onClick={() => 
+                      handleDeleteApplication(application.id)}>
+                        <img src={Bin} alt="" className="bin" style={{width: "25px"}}/></Button>
                     </Col>
                   </Row>
                 ))
@@ -144,6 +196,13 @@ export default function Tracking() {
                 onAddApplication={handleAddApplication}
               />
 
+              {/* Update Form Modal */}
+              <UpdateApplicationModal
+              showModal={showUpdateModal}
+              handleClose={handleCloseUpdateModal}
+              onUpdateApplication={handleUpdateApplication}
+              selectedApplication={selectedApplication}
+            />
               </Container>
    
             </Col>

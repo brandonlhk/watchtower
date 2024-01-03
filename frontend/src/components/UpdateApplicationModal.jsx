@@ -11,14 +11,14 @@ const getCurrentDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-export default function ApplicationFormModal({ showModal, handleClose, onAddApplication }) {
+export default function UpdateApplicationModal({ showModal, handleClose, onUpdateApplication, selectedApplication }) {
   const [newApplication, setNewApplication] = useState({
-    id: uuidv1(),
-    company: '',
-    role: '',
-    date: getCurrentDate(),
-    status: '',
-    logo: ''
+    id: selectedApplication.id,
+    company: selectedApplication.company,
+    role: selectedApplication.role,
+    date: selectedApplication.date,
+    status: selectedApplication.status,
+    logo: selectedApplication.logo
   });
 
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
@@ -82,12 +82,12 @@ export default function ApplicationFormModal({ showModal, handleClose, onAddAppl
   };
   
 
-  const handleAddApplication = () => {
+  const handleUpdateApplication  = () => {
     // Log the date to check its format
     console.log("App Date:", newApplication.date);
   
     // Call the onAddApplication function with the newApplication
-    onAddApplication(newApplication);
+    onUpdateApplication(updatedApplication);
   
     // Reset the form state
     setNewApplication({
