@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Navbar from "../components/NavbarTracking"
 import ApplicationFormModal from '../components/ApplicationFormModal';
-import UpdateApplicationModal from "../components/UpdateApplicationModal"
+// import UpdateApplicationModal from "../components/UpdateApplicationModal"
 import {Container, Row, Col, Button, Badge} from "react-bootstrap"
 import testData from "../data"
 import "../trackingPage.css"
 import moment from 'moment';
 import Bin from "../images/bin.png"
+import Pencil from "../images/pencil.png"
 
 
 export default function Tracking() {
@@ -152,7 +153,7 @@ export default function Tracking() {
               {terms.filter((term) => term.term_name === selectedTerm).map((term) => (
                 term.applications.map((application, index) => (
                   
-                  <Row className='pt-3'>
+                  <Row className='pt-3 justify-content-center'>
                     <hr></hr>
                     {/* Image */}
                     <Col xs={2} className="border" style={{maxWidth: "128px"}}>
@@ -169,17 +170,22 @@ export default function Tracking() {
                     
                     </Col>
 
-                    {/* Update status button */}
+                    {/* User edit application area */}
                     <Col xs={2} className='border'>
-                      <Button variant="outline-primary" 
-                      onClick={() => {
-                        setSelectedApplication(application)
-                        handleShowUpdateModal()}}>Update Application</Button>
+                    <div class="btn-group" role="group" aria-label="editAndDelete">
+                      {/* Edit application */}
+                      <Button variant="link"
+                        onClick={() => {
+                          setSelectedApplication(application)
+                          handleShowUpdateModal()}}> 
+                          <img src={Pencil} alt="" className="icon" style={{width: "25px"}}/></Button>
 
-                      <Button variant="link" 
+                      {/* Delete application */}
+                      <Button variant="link"
                       onClick={() => 
                       handleDeleteApplication(application.id)}>
-                        <img src={Bin} alt="" className="bin" style={{width: "25px"}}/></Button>
+                        <img src={Bin} alt="" className="icon" style={{width: "25px"}}/></Button>
+                    </div>
                     </Col>
                   </Row>
                 ))
@@ -197,12 +203,12 @@ export default function Tracking() {
               />
 
               {/* Update Form Modal */}
-              <UpdateApplicationModal
+              {/* <UpdateApplicationModal
               showModal={showUpdateModal}
               handleClose={handleCloseUpdateModal}
               onUpdateApplication={handleUpdateApplication}
               selectedApplication={selectedApplication}
-            />
+            /> */}
               </Container>
    
             </Col>

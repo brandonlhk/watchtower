@@ -5,6 +5,10 @@
     font-style: normal;
 }
 
+body, html {
+  overflow-x: hidden
+}
+
 .term {
     box-sizing: border-box;
     cursor: pointer;
@@ -27,7 +31,7 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 
-  .bin:hover {
+  .icon:hover {
     background-color: white;
     opacity: .5;
   }

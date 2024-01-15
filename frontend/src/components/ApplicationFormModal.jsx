@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, FloatingLabel, ListGroup } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { Modal, Button, Form, FloatingLabel, ListGroup } from 'react-bootstrap'
+import axios from 'axios'
 import {v1 as uuidv1} from "uuid"
+import Default from "../images/default.jpg"
 
 const getCurrentDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, '0');
-  const day = today.getDate().toString().padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = (today.getMonth() + 1).toString().padStart(2, '0')
+  const day = today.getDate().toString().padStart(2, '0')
+  return `${year}-${month}-${day}`
 };
 
 export default function ApplicationFormModal({ showModal, handleClose, onAddApplication }) {
@@ -18,11 +19,11 @@ export default function ApplicationFormModal({ showModal, handleClose, onAddAppl
     role: '',
     date: getCurrentDate(),
     status: '',
-    logo: ''
+    logo: Default
   });
 
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
-
+  const [isCompanyInputFocused, setIsCompanyInputFocused] = useState(false);
 
   useEffect(() => {
     // Fetch autocomplete options when the component mounts
@@ -96,7 +97,7 @@ export default function ApplicationFormModal({ showModal, handleClose, onAddAppl
       role: '',
       date: getCurrentDate(),
       status: '',
-      logo: ''
+      logo: Default
     });
   
     // Close the modal
@@ -120,10 +121,12 @@ export default function ApplicationFormModal({ showModal, handleClose, onAddAppl
                 name="company"
                 value={newApplication.company}
                 onChange={handleInputChange}
+                onFocus={() => setIsCompanyInputFocused(true)}
+                onBlur={() => setIsCompanyInputFocused(false)}
               />
             </FloatingLabel>
             {/* Display the autocomplete options as a list */}
-            {autocompleteOptions.length > 0 && newApplication.company.length > 0 && (
+            {autocompleteOptions.length > 0 && newApplication.company.length > 0 && isCompanyInputFocused && (
               <ListGroup className="autocomplete-options shadow"     style={{
                 position: 'absolute',
                 width: '94%',
@@ -132,7 +135,7 @@ export default function ApplicationFormModal({ showModal, handleClose, onAddAppl
                 overflowY: 'auto',
               }}>
                 {autocompleteOptions.map((company, index) => (
-                  <ListGroup.Item key={index} onClick={() => handleAutocompleteOptionClick(company.name)} style={{textWrap: "wrap"}}>
+                  <ListGroup.Item key={index} onMouseDown={() => handleAutocompleteOptionClick(company.name)} style={{textWrap: "wrap"}}>
                     <img src={company.logo} alt="" width="50px" className="me-3"/>
                     <span >{company.name}</span>
                   </ListGroup.Item>
